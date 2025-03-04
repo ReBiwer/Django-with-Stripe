@@ -27,6 +27,17 @@ services:
     networks:
       my_network:
         ipv4_address: 172.18.0.3
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '8000:8000'
+    volumes:
+      - .:/app
+    networks:
+      - my_network
 
 networks:
   my_network:
