@@ -1,0 +1,12 @@
+{% extends 'payment/base.html' %}
+
+{% block title %}
+  Success payment
+{% endblock %}
+
+{% block body %}
+  <div>
+    <p>Payment Success</p>
+    <p><a href="{% url 'admin:index' %}">Go to admin</a></p>
+  </div>
+{% endblock %}
