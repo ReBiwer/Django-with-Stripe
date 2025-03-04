@@ -17,7 +17,7 @@ def get_stripe_session(item: Item, request: HttpRequest) -> stripe.checkout.Sess
                     "product_data": {
                         "name": item.name,
                     },
-                    "unit_amount": item.price,
+                    "unit_amount": int(item.price * 100),
                 },
                 "quantity": 1,
             },
