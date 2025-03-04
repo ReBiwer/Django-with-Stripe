@@ -1,6 +1,6 @@
 from django.urls import path
 
 
-app_name = "apistripe"
+app_name = "payment"
 
 urlpatterns = []
