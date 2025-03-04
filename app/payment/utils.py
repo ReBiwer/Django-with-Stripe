@@ -1,9 +1,12 @@
 import stripe
+from django.http import HttpRequest
+from django.urls import reverse
+
 from app.app import settings
 from .models import Item
 
 
-def get_stripe_session_id(item: Item):
+def get_stripe_session_id(item: Item, request: HttpRequest):
     stripe.api_key = settings.STRIPE_SECRET_KEY
     session = stripe.checkout.Session.create(
         payment_method_types=["card"],
@@ -20,7 +23,7 @@ def get_stripe_session_id(item: Item):
             },
         ],
         mode="payment",
-        success_url="",
-        cancel_url="",
+        success_url=request.build_absolute_uri(reverse('payment:success_payment')),
+        cancel_url=request.build_absolute_uri(reverse('payment:cancel_payment')),
     )
     return session
