@@ -1,5 +1,5 @@
-from django.http import HttpRequest
-from django.views.generic import View
+from django.http import HttpRequest, JsonResponse
+from django.views.generic import View, DetailView
 from .utils import get_stripe_session
 from .models import Item
 
@@ -10,4 +10,10 @@ class GetStripeSession(View):
         id_item = self.kwargs.get('id')
         item_obj = Item.objects.get(id=int(id_item))
         session_pay = get_stripe_session(item_obj, request)
-        return session_pay.id
+        return JsonResponse(data={'session': session_pay})
+
+
+class PayItem(DetailView):
+    template_name = 'payment/buy_item.html'
+    context_object_name = 'item'
+    model = Item
