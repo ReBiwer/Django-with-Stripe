@@ -38,7 +38,6 @@ INTERNAL_IPS = [
 ]
 
 STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
-STRIPE_CUSTOMER = os.environ.get('STRIPE_CUSTOMER')
 
 # Application definition
 
