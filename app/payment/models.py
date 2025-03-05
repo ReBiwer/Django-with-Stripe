@@ -21,7 +21,7 @@ class Order(models.Model):
     tax = models.ForeignKey('Tax', null=True, blank=True, on_delete=models.SET_NULL)
 
     def get_intent_url(self):
-        return reverse('payment:get_intent', kwargs={'id': self.pk})
+        return reverse('payment:get_intent')
 
 class Discount(models.Model):
     stripe_id = models.CharField(max_length=50)
