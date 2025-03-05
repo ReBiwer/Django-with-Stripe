@@ -1,7 +1,9 @@
+import json
+from django.db.models import Sum
 from django.http import HttpRequest, JsonResponse
 from django.views.generic import View, DetailView
-from .utils import get_stripe_session
-from .models import Item
+from .utils import get_stripe_session, get_stripe_intent
+from .models import Item, Order
 
 
 class GetStripeSession(View):
@@ -17,3 +19,16 @@ class PayItem(DetailView):
     template_name = 'payment/buy_item.html'
     context_object_name = 'item'
     model = Item
+
+
+class PayOrder(DetailView):
+    template_name = 'payment/buy_order.html'
+    context_object_name = 'order'
+    model = Order
+
+    def get_queryset(self):
+        order_id = self.kwargs.get('pk')
+        order = Order.objects.filter(id=order_id).annotate(
+            total_amount=Sum('items__price'),
+        )
+        return order
