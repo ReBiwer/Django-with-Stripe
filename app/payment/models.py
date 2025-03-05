@@ -11,14 +11,17 @@ class Item(models.Model):
         ('eur', 'EUR')
     ])
 
-    def get_session_url(self):
-        return reverse('payment:get_session', kwargs={'id': self.pk})
+    def get_intent_url(self):
+        return reverse('payment:get_intent', kwargs={'id': self.pk})
 
 
 class Order(models.Model):
     items = models.ManyToManyField('Item')
     discount = models.ForeignKey('Discount', null=True, blank=True, on_delete=models.SET_NULL)
     tax = models.ForeignKey('Tax', null=True, blank=True, on_delete=models.SET_NULL)
+
+    def get_intent_url(self):
+        return reverse('payment:get_intent', kwargs={'id': self.pk})
 
 class Discount(models.Model):
     stripe_id = models.CharField(max_length=50)
